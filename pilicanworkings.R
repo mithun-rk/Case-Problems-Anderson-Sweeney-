@@ -8,8 +8,8 @@ getwd()
 # Objectives: Develop customer porfile and evaluate promotional campaign.
 
 # Reading the data
-ps<-read.csv("PelicanStores.csv", header = TRUE, sep = ",")
-dim(ps)
+ps<-read.csv("PelicanStores.csv", header = TRUE, sep = ",")# reading the data
+dim(ps)# checking the diamensions
 str(ps)
 head(ps)
 # Variable Type
@@ -20,7 +20,7 @@ head(ps)
 # ANALYSING QUALITATIVE VARIABLES ONE BY ONE
 # VARIABLE: Type of customer
 library(plyr)
-y<-count(ps$Type.of.Customer) # Finding the frequencies & Plotting
+y<-count(ps$Type.of.Customer)# Finding the frequencies & Plotting
 y
 
 n<-sum(y$freq) # Calculating relative frequencies
@@ -40,10 +40,11 @@ barplot(tc$freq,names.arg = tc$x, main = "Var 1.Customer Type \n based on purcha
 
 pie(tc$freq[order(tc$freq, decreasing = TRUE)], init.angle = 90, # Lets make a pie chart 
     clockwise = TRUE,
+    labels = tc$x,
     col = c("seashell","cadetblue2"),
     main = "Pie chart of Variable 1 Customer Type")
 
-## FINDINGS for variable 1: Most of the customers who purchased where of Promotional type.
+  ## FINDINGS for variable 1: Most of the customers who purchased where of Promotional type.
 # Looks like the promotion was effective as most customers where promotional type
 
 # VARIABLE: Method of Payment
@@ -228,12 +229,13 @@ stem(x= ps$Net.Sales)
 
 # Variable 3. Age
 # Frequencies
+ps$Age<- as.numeric(ps$Age)
 summary(ps$Age)
 range(ps$Age)
 #Lets define some values to create bins
-low_value<- 20
+low_value<- 10
 High_value<- 80
-step_value<- 12
+step_value<- 10
 x_breaks<- seq(low_value,High_value,step_value)
 x_breaks
 
@@ -345,13 +347,14 @@ ttab8
 summary(ps$Age)
 range(ps$Age)
 #Lets define some values to create bins
-low_value<- 20
+low_value<- 10
 High_value<- 80
 step_value<- 10
 x_breaks<- seq(low_value,High_value,step_value)
 x_breaks
 
-ps$ac<-cut(ps$Age, breaks = x_breaks,labels = c("20-29Yrs","30-39Yrs","40-49Yrs","50-59Yrs","60-69Yrs","70-79Yrs"))
+ps$ac<-cut(ps$Age, breaks = x_breaks,labels = c("10-20","21-30Yrs","31-40Yrs","41-50Yrs","51-60Yrs","61-70Yrs","71-80Yrs"))
+
 ps$ac
 y<- table(ps$ac)
 y
@@ -373,6 +376,47 @@ ttab12<-table(ps$Marital.Status,ps$ac)
 ttab12<-round(prop.table(ttab12,1),2)*100
 ttab12
 
+
+
+### DESCRIPTIVE STATISTICS 
+summary(ps) # summary of the entire data frame.
+
+## Descriptive stats for Qualitative variables 
+summary(ps$Type.of.Customer) # Qualitative variable 1 
+summary(ps$Method.of.Payment) # Qualitative variable 2
+summary(ps$Gender) # Qualitative variable 3
+summary(ps$Marital.Status) #  Qualitative variable 4
+
+## Descriptive stats for Quantitative variable
+
+summary(ps$Items) # continous variable 1
+fivenum(ps$Items) # Min,1st & 3rd quartile, median, Max.
+boxplot.stats(ps$Items) # This function also gives you the outliers. 
+
+library(psych)
+describe(ps$Items)
+## Plotting
+boxplot(ps$Items,horizontal = TRUE, col = "brown")
+
+summary(ps$Net.Sales) # continous variable 2
+fivenum(ps$Net.Sales) # Min,1st & 3rd quartile, median, Max.
+boxplot.stats(ps$Net.Sales) # This function also gives you the outliers. 
+
+describe(ps$Net.Sales)
+boxplot(ps$Net.Sales,horizontal = TRUE, col = "brown")
+
+summary(ps$Age) # continous variable 3
+fivenum(ps$Age) # Min,1st & 3rd quartile, median, Max.
+boxplot.stats(ps$Age) # This function also gives you the outliers. 
+
+describe(ps$Age)
+boxplot(ps$Age,horizontal = TRUE, col = "brown")
+
+## Measure of Association 
+cor(ps$Items,ps$Net.Sales)
+cor(ps$Items,ps$Age)
+cor(ps$Net.Sales,ps$Age)
+
 # Some Scatter plots 
 library(car)
 scatterplot(ps$Net.Sales~ps$Age, pch=16, col="darkblue",
@@ -382,3 +426,9 @@ scatterplot(ps$Net.Sales~ps$Age, pch=16, col="darkblue",
 scatterplot(ps$Net.Sales~ps$Items,pch=16, col="darkblue",
             main="Net sales againts No. of items sold",
             xlab= "Number of Items Purchased", ylab="Sales in $")
+
+scatterplot(ps$Age~ps$Items,pch=16, col="darkblue",
+            main="Net sales againts No. of items sold",
+            xlab= "Number of Items Purchased", ylab="Age in Years")
+
+
