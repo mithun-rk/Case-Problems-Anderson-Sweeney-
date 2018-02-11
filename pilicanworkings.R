@@ -431,4 +431,19 @@ scatterplot(ps$Age~ps$Items,pch=16, col="darkblue",
             main="Net sales againts No. of items sold",
             xlab= "Number of Items Purchased", ylab="Age in Years")
 
+promotional.sales<-sum(ps$Net.Sales[ps$Type.of.Customer=="Promotional"])
+Regular.sales<-sum(ps$Net.Sales[ps$Type.of.Customer=="Regular"])
+Total.sales<-sum(ps$Net.Sales)
+
+promotional.sales/Total.sales
+Regular.sales/Total.sales
+
+
+
+
+
+
+
+
+
 

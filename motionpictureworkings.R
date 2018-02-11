@@ -249,3 +249,31 @@ scatterplot(movies$Total.Gross.Sales...millions.~movies$Weeks.in.Release,pch=16,
             xlab= "Number of Weeks running", ylab="Collection in Millions")
 cor(movies$Total.Gross.Sales...millions.,movies$Weeks.in.Release)
 ## Findings; Running more than 20 weeks is counter productive. 
+
+
+## Question 5
+# Descriptive statistics for each of the 4 variable. 
+summary(movies$Opening.Gross.Sales...millions.) 
+fivenum(movies$Opening.Gross.Sales...millions.) # Min,1st & 3rd quartile, median, Max.
+boxplot.stats(movies$Opening.Gross.Sales...millions.) # This function also gives you the outliers. 
+
+library(psych)
+describe(movies$Opening.Gross.Sales...millions.)
+## Plotting
+boxplot(movies$Opening.Gross.Sales...millions.,horizontal = TRUE, col = "brown")
+## Findings: Most movies made less equal to 19 million. There are some real outstanding
+## performerers, one of them collected as high as 169 million.
+
+boxplot.stats(movies$Total.Gross.Sales...millions.)
+describe(movies$Total.Gross.Sales...millions.)
+boxplot(movies$Total.Gross.Sales...millions.,horizontal = TRUE, col = "blue")
+
+
+boxplot.stats(movies$Number.of.Theaters)
+describe(movies$Number.of.Theaters)
+boxplot(movies$Number.of.Theaters,horizontal = TRUE, col = "blue")
+
+
+boxplot.stats(movies$Weeks.in.Release)
+describe(movies$Weeks.in.Release)
+boxplot(movies$Weeks.in.Release,horizontal = TRUE, col = "blue")
